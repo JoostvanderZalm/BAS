@@ -32,10 +32,34 @@ phone               : PhoneNumber;
 incidents           : Association to many Incidents on incidents.customer = $self;
 creditCardNo        : String(16) @assert.format: '^[1-9]\d{15}$';
 addresses           : Composition of many Addresses on addresses.customer = $self;
-
-
 }
 
+entity Addresses : cuid, managed {
+customer        : Association to Customers;
+city            : String;
+postCode        : String; 
+streetAddress   : String;    
+}
+
+entity Urgency : CodeList {
+key code: String enum {
+    high = 'H';
+    medium = 'M'; 
+    low = 'L';
+};  
+}
+
+entity Status : CodeList {
+key code: String enum {
+    new = 'N';
+    assigned = 'A';
+    in_process = 'I'; 
+    on_hold = 'H';
+    resolved = 'R';
+    closed = 'C'; 
+};
+criticality : Integer;    
+}
 
 type EMailAddress : String;
 type PhoneNumber : String;
